@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Iframe Scaling Example</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    iframe {
-      border: none;
-      width: 100%;
-      height: 100vh;
-    }
-  </style>
+    <title>Iframe Scaling Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        iframe {
+            border: none;
+            width: calc(100% / var(--scale-factor));
+            height: calc(100vh / var(--scale-factor));
+            transform: scale(var(--scale-factor));
+            transform-origin: 0 0;
+        }
+    </style>
 </head>
+
 <body>
-  <iframe id="myIframe" src=""></iframe>
-  <script>
-    // Get the URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    // Get the iframe target URL from the URL parameter
-    const iframeUrl = urlParams.get('url');
+    <iframe id="myIframe" src=""></iframe>
 
-    // Set the iframe target URL
-    if (iframeUrl) {
-      const iframe = document.getElementById('myIframe');
-      iframe.src = iframeUrl;
+    <script>
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
 
-      // Modify the user agent string to mimic a desktop browser
-      iframe.addEventListener('load', function() {
-        iframe.contentWindow.navigator.__defineGetter__('userAgent', function() {
-          return 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36';
+        // Get the scaling factor from the URL parameter (default to 1 if not provided)
+        const scaleFactor = urlParams.get('scale') || 1;
+
+        // Get the iframe target URL from the URL parameter
+        const iframeUrl = urlParams.get('url');
+
+        // Set the scaling factor as a CSS variable
+        document.documentElement.style.setProperty('--scale-factor', scaleFactor);
+
+        // Set the iframe target URL
+        if (iframeUrl) {
+            document.getElementById('myIframe').src = iframeUrl;
+        }
+
+        // Modify the user agent string to mimic a desktop browser
+        iframe.addEventListener('load', function () {
+            iframe.contentWindow.navigator.__defineGetter__('userAgent', function () {
+                return 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36';
+            });
         });
-      });
-    }
-  </script>
+
+    </script>
 </body>
+
 </html>
