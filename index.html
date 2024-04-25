@@ -23,9 +23,9 @@
     // Get the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     // Get the zoom factor from the URL parameter (default to 1 if not provided)
-    const zoomFactor = urlParams.get('zoom') || 1;
+    const zoomFactor = urlParams.get('scale') || 1;
     // Get the iframe target URL from the URL parameter
-    const iframeUrl = urlParams.get('scale') || 1;
+    const iframeUrl = urlParams.get('url');
     // Set the zoom factor as a CSS variable
     document.documentElement.style.setProperty('--zoom-factor', zoomFactor);
     // Set the iframe target URL
