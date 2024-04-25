@@ -39,8 +39,8 @@
       const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
       const screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-      iframe.style.width = (screenWidth * (1 - zoomFactor)) + 'px';
-      iframe.style.height = (screenHeight * (1 - zoomFactor)) + 'px';
+      iframe.style.width = (screenWidth * (1 + zoomFactor)) + 'px';
+      iframe.style.height = (screenHeight * (1 + zoomFactor)) + 'px';
     }
 
     window.addEventListener('resize', adjustIframeSize);
