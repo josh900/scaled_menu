@@ -2,13 +2,13 @@
 <html>
 <head>
   <title>Iframe Scaling Example</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <style>
     body, html {
       margin: 0;
       padding: 0;
       overflow: hidden;
     }
+
     iframe {
       border: none;
       width: calc(100% / var(--scale-factor));
@@ -20,15 +20,20 @@
 </head>
 <body>
   <iframe id="myIframe" src=""></iframe>
+
   <script>
     // Get the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
+
     // Get the scaling factor from the URL parameter (default to 1 if not provided)
     const scaleFactor = urlParams.get('scale') || 1;
+
     // Get the iframe target URL from the URL parameter
     const iframeUrl = urlParams.get('url');
+
     // Set the scaling factor as a CSS variable
     document.documentElement.style.setProperty('--scale-factor', scaleFactor);
+
     // Set the iframe target URL
     if (iframeUrl) {
       document.getElementById('myIframe').src = iframeUrl;
