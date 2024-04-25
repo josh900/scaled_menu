@@ -23,15 +23,28 @@
     // Get the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     // Get the zoom factor from the URL parameter (default to 1 if not provided)
-    const zoomFactor = urlParams.get('scale') || 1;
+    const zoomFactor = urlParams.get('zoom') || 1;
     // Get the iframe target URL from the URL parameter
-    const iframeUrl = urlParams.get('url');
+    const iframeUrl = urlParams.get('scale') || 1;
     // Set the zoom factor as a CSS variable
     document.documentElement.style.setProperty('--zoom-factor', zoomFactor);
     // Set the iframe target URL
     if (iframeUrl) {
       document.getElementById('myIframe').src = iframeUrl;
     }
+
+    // Adjust the iframe size based on the device's screen size
+    function adjustIframeSize() {
+      const iframe = document.getElementById('myIframe');
+      const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      const screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+      iframe.style.width = screenWidth + 'px';
+      iframe.style.height = screenHeight + 'px';
+    }
+
+    window.addEventListener('resize', adjustIframeSize);
+    adjustIframeSize();
   </script>
 </body>
 </html>
