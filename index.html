@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Menu Scaling</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    iframe {
+      border: none;
+      --scale-factor: 1;
+      width: calc(100% / var(--scale-factor));
+      height: calc(100vh / var(--scale-factor));
+      transform: scale(var(--scale-factor));
+      transform-origin: 0 0;
+    }
+  </style>
+</head>
+<body>
+  <iframe id="myIframe" src=""></iframe>
+
+  <script>
+    // Get the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Get the scaling factor from the URL parameter (default to 1 if not provided)
+    const scaleFactor = urlParams.get('scale') || 1;
+
+    // Get the iframe target URL from the URL parameter
+    const iframeUrl = urlParams.get('url');
+
+    // Set the scaling factor as a CSS variable
+    document.documentElement.style.setProperty('--scale-factor', scaleFactor);
+
+    // Set the iframe target URL
+    if (iframeUrl) {
+      document.getElementById('myIframe').src = iframeUrl;
+    }
+  </script>
+</body>
+</html>
