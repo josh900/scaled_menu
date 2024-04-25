@@ -110,7 +110,29 @@ I've also heard there is a specific meta tag for Android WebView (target-density
 I've also heard something about setting the targetWidth to match the actual width of the WebView.
 
  My screen is 1920w by 1080h, but it is in portrait mode.
+```
 
 
+improved prompt:
+```
+
+As an expert in responsive web design and optimization for mobile platforms, please provide guidance on resolving the scaling and layout issues when displaying this website in a WebView on Fire OS.  
+
+###
+
+The website displays correctly in a browser on a desktop or mobile device. However, when displayed in a fullscreen WebView on Fire OS, specifically on a 1920x1080 Fire TV in portrait orientation, the layout appears zoomed in and spaced out improperly. 
+
+Text and UI elements render smaller, yet there is too much space between columns and sections. This indicates the WebView may be applying default scaling or zooming that needs to be counteracted.
+
+Please suggest CSS rules, meta tags, WebView configuration options, or other techniques to negate the unwanted scaling effects and make the site render properly in the Fire OS WebView. 
+
+Ideal solutions would:
+
+- Prevent incorrect scaling on page load
+- Match scaling factor to physical screen resolution 
+- Ensure text and layout render as intended
+- Work across Fire OS devices and orientations
+
+Please provide code examples where applicable. Focus especially on CSS, meta tags, media queries, and any Fire OS WebView specifics.
 
 ```
