@@ -103,7 +103,6 @@ You can see an example in the attatched images where the first image is correct 
 I am trying to do this because my website when displayed on a firestick in webview the site is scaled up or zoomed in in some way.
 The scaling solution we've created works, but it's scaling in a weird way, or the layout is weird, in a way where now the text is smaller, but the columns are spaced out in a weird way.
 You can see in the attached images where the first one is what it should look like and then the second image, what it actually looks like on screen.
-Is there another way we can scale, or is it some other issue that could be resolved with css?
 
 it works fine on my browser and any others, it is only happening in fireos android webview, which indicates its some type of scalling or zooming fireos android webview is doing. I need a way to apply some styling or modifications to my iframe to negate these effects. please come up with ome potential solutions.
 I've also heard there is a specific meta tag for Android WebView (target-densitydpi=device-dpi) that can help control scaling. 
@@ -113,26 +112,48 @@ I've also heard something about setting the targetWidth to match the actual widt
 ```
 
 
-improved prompt:
 ```
 
-As an expert in responsive web design and optimization for mobile platforms, please provide guidance on resolving the scaling and layout issues when displaying this website in a WebView on Fire OS.  
 
-###
+I think the solution is to do this:
+Set WebView settings like:
 
-The website displays correctly in a browser on a desktop or mobile device. However, when displayed in a fullscreen WebView on Fire OS, specifically on a 1920x1080 Fire TV in portrait orientation, the layout appears zoomed in and spaced out improperly. 
+webView.settings.run {
+    builtInZoomControls = true
+    //hide +- zoom buttons
+    displayZoomControls = false 
+    //zooms out the content to fit on screen by width
+    loadWithOverviewMode = true 
+    //when page contains the viewport meta tag
+    useWideViewPort = true 
+}
+But consider that zoom settings above, work only for WebView first run.
+If you want to full zoom out every time you load a URL in WebView (I faced this case), use zoomBy like this
 
-Text and UI elements render smaller, yet there is too much space between columns and sections. This indicates the WebView may be applying default scaling or zooming that needs to be counteracted.
+webView.loadUrl(url)
+webView.zoomBy(0.02f)
 
-Please suggest CSS rules, meta tags, WebView configuration options, or other techniques to negate the unwanted scaling effects and make the site render properly in the Fire OS WebView. 
 
-Ideal solutions would:
+---
 
-- Prevent incorrect scaling on page load
-- Match scaling factor to physical screen resolution 
-- Ensure text and layout render as intended
-- Work across Fire OS devices and orientations
+Please try to implement a solution which gives the same effect as the above setting WebView setting, but using only html, css, and js, in a page which contains the iframe with target https://menu-app.skoopsignage.app/?appId=2&posId=18&entryId=8060&isLegacy=false&apiBaseUrl=backend-extension-v2.skoopsignage.app&refresh=true
 
-Please provide code examples where applicable. Focus especially on CSS, meta tags, media queries, and any Fire OS WebView specifics.
-
+Really review and deeply inderstand what this functionality is doing:
 ```
+webView.settings.run {
+    builtInZoomControls = true
+    //hide +- zoom buttons
+    displayZoomControls = false 
+    //zooms out the content to fit on screen by width
+    loadWithOverviewMode = true 
+    //when page contains the viewport meta tag
+    useWideViewPort = true 
+}
+But consider that zoom settings above, work only for WebView first run.
+If you want to full zoom out every time you load a URL in WebView (I faced this case), use zoomBy like this
+
+webView.loadUrl(url)
+webView.zoomBy(0.02f)
+```
+
+And make sure the end result of the website looks the same as if it was displayed in a webview with the above settings.
