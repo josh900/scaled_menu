@@ -20,12 +20,30 @@
   </style>
 </head>
 <body>
-  <iframe src="https://menu-app.skoopsignage.app/?appId=2&posId=18&entryId=8060&isLegacy=false&apiBaseUrl=backend-extension-v2.skoopsignage.app&refresh=true"></iframe>
+  <iframe id="myIframe" src=""></iframe>
 
   <script>
+    // Get the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Get the scaling factor from the URL parameter (default to 1 if not provided)
+    const urlScaleFactor = urlParams.get('scale') || 1;
+
+    // Get the iframe target URL from the URL parameter
+    const iframeUrl = urlParams.get('url') || 'https://menu-app.skoopsignage.app/?appId=2&posId=18&entryId=8060&isLegacy=false&apiBaseUrl=backend-extension-v2.skoopsignage.app&refresh=true';
+
+    // Calculate the automatic scaling factor based on the device width and the desired target width
     const targetWidth = 1920;
-    const scaleFactor = window.innerWidth / targetWidth;
+    const autoScaleFactor = window.innerWidth / targetWidth;
+
+    // Combine the URL scale factor and the automatic scale factor
+    const scaleFactor = urlScaleFactor * autoScaleFactor;
+
+    // Set the scaling factor as a CSS variable
     document.documentElement.style.setProperty('--scale-factor', scaleFactor);
+
+    // Set the iframe target URL
+    document.getElementById('myIframe').src = iframeUrl;
   </script>
 </body>
 </html>
