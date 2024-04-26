@@ -1,49 +1,73 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Iframe Scaling Example</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
+    <title>Iframe Scaling Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
 
-    iframe {
-      border: none;
-      width: calc(100% / var(--scale-factor));
-      height: calc(100vh / var(--scale-factor));
-      transform: scale(var(--scale-factor));
-      transform-origin: 0 0;
-    }
-  </style>
+        iframe {
+            border: none;
+            width: calc(1920px * var(--scale-factor));
+            height: calc(1080px * var(--scale-factor));
+            transform-origin: 0 0;
+        }
+
+        @media screen and (max-width: 1920px) {
+
+            /* Styles for screens with a maximum width of 1920px */
+            iframe {
+                width: calc(100% / var(--scale-factor));
+                height: calc(100vh / var(--scale-factor));
+            }
+        }
+
+        @media screen and (max-width: 1280px) {
+
+            /* Styles for screens with a maximum width of 1280px */
+            iframe {
+                width: calc(100% / var(--scale-factor));
+                height: calc(100vh / var(--scale-factor));
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <iframe id="myIframe" src=""></iframe>
+    <iframe id="myIframe" src=""></iframe>
+    <script>
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
 
-  <script>
-    // Get the URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
+        // Get the scaling factor from the URL parameter (default to 1 if not provided)
+        const urlScaleFactor = urlParams.get('scale') || 1;
 
-    // Get the scaling factor from the URL parameter (default to 1 if not provided)
-    const urlScaleFactor = urlParams.get('scale') || 1;
+        // Get the iframe target URL from the URL parameter
+        const iframeUrl = urlParams.get('url') || 'https://menu-app.skoopsignage.app/?appId=2&posId=18&entryId=8060&isLegacy=false&apiBaseUrl=backend-extension-v2.skoopsignage.app&refresh=true';
 
-    // Get the iframe target URL from the URL parameter
-    const iframeUrl = urlParams.get('url') || 'https://menu-app.skoopsignage.app/?appId=2&posId=18&entryId=8060&isLegacy=false&apiBaseUrl=backend-extension-v2.skoopsignage.app&refresh=true';
+        // Calculate the automatic scaling factor based on the device width and the desired target width
+        const targetWidth = window.innerWidth * 0.8; // 80% of the screen width
+        const autoScaleFactor = window.innerWidth / targetWidth;
 
-    // Calculate the automatic scaling factor based on the device width and the desired target width
-    const targetWidth = 1920;
-    const autoScaleFactor = window.innerWidth / targetWidth;
+        // Combine the URL scale factor and the automatic scale factor
+        let scaleFactor = urlScaleFactor * autoScaleFactor;
 
-    // Combine the URL scale factor and the automatic scale factor
-    const scaleFactor = urlScaleFactor * autoScaleFactor;
+        // Clamp the scale factor to a maximum value
+        const maxScaleFactor = 1.5;
+        scaleFactor = Math.min(scaleFactor, maxScaleFactor);
 
-    // Set the scaling factor as a CSS variable
-    document.documentElement.style.setProperty('--scale-factor', scaleFactor);
+        // Set the scaling factor as a CSS variable
+        document.documentElement.style.setProperty('--scale-factor', scaleFactor);
 
-    // Set the iframe target URL
-    document.getElementById('myIframe').src = iframeUrl;
-  </script>
+        // Set the iframe target URL
+        document.getElementById('myIframe').src = iframeUrl;
+    </script>
 </body>
+
 </html>
